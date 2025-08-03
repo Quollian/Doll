@@ -5,12 +5,17 @@
     <h1>Doll Dressup</h1>
   </div>
   
-  <div id="mainContainer">
-    
+   <div id="mainContainer">
+      <img src="images/base/hairBack.png">
+      <img src="images/base/body.png">
+      <img src="images/base/hairFront.png">
   </div>
 
   <div id="controls">
-    
+    <button onclick="showScreens()">Next</button>
+    <div id="screens">
+    </div>
+    <!--<button onclick="toggleItem(blackPants)">blackPants</button>-->
   </div>
   
 </body>
@@ -20,8 +25,387 @@
   #header {
     background-color: #333;
   }
+
+  #mainContainer {
+    position: relative;
+    margin: auto;
+    width: 70vw;
+    height: 90vw;
+    max-width: 490px;
+    max-height: 700px;
+  }
+
+  #mainContainer img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+  }
+
+  #controls {
+    position: static;
+  }
+
 </style>
 
 <script>
+
+  let sleevesTucked = false;
+  let shirtTucked = false;
+  let pantsTucked = false;
+  let pantsMid = false;
+  let pantsShort = false;
+
+  // base images
+  const hairBack = {show: true, category:"base", item:"hairBack", type:"", name: "Hair Back", trigger: ""};
+  const hairFront = {show: true, category:"base", item:"hairFront", type:"",  name: "Body", trigger: ""};
+  const body = {show: true, category:"base", item:"body", type:"",  name: "Hair Front", trigger: ""};
+
+  // Shirts
+  const whiteShirt = {show: false, category:"Shirts", item:"whiteShirt", type:"looseUntucked",  name: "Basic White Shirt", trigger: ""};
+
+
+  //Pants
+  const blackPants = {show: false, category:"Pants", item:"blackPants", type:"long",  name: "Black Pants", trigger: ""};
+
+  //Shoes
+  const decorativeBoots = {show: false, category:"Shoes", item:"decorativeBoots", type:"",  name: "Decorative Shoes", trigger: "Pants (Short)"};
   
+  // Overshirts
+  const leafcoat= {show: false, category:"Overshirts", item:"leafcoat", type:"",  name: "Leaf Coat", trigger: "Tucked Shirt"};
+  const redcoat= {show: false, category:"Overshirts", item:"redcoat", type:"",  name: "Red Coat", trigger: "Tucked Shirt"};
+  
+  // Gloves
+  const moon = {show: false, category:"Gloves", item:"moon", type:"",  name: "Moon Gloves", trigger: "Sleeves"};
+  const short = {show: false, category:"Gloves", item:"short", type:"",  name: "Short Gloves", trigger: "Sleeves"};
+
+
+  // buttonsScreens
+  let screenNumber = 0;
+  let buttonScreens = ["Shirts", "Pants", "Shoes", "Overshirts", "Gloves", "Capes"];
+
+
+  let imageArray = [hairBack, body, decorativeBoots, blackPants, whiteShirt, short, moon, leafcoat, redcoat, hairFront];
+
+
+  function showScreens(){
+
+    let returnedString = "<h3>";
+
+    if (screenNumber == (buttonScreens.length -1)){
+      screenNumber = 0;
+    }
+    else {
+      screenNumber++;
+    }
+
+    returnedString = returnedString + buttonScreens[screenNumber] + "</h3>";
+
+    for (i = 0; i < imageArray.length; i++){
+      if (buttonScreens[screenNumber] == imageArray[i].category){
+        returnedString = returnedString + '<button onclick="toggleItem(' + imageArray[i].item + ')">'+ imageArray[i].item + '</button>';
+      }
+    }
+
+    if (buttonScreens[screenNumber] == "Pants"){
+      returnedString = returnedString + '<div id="states"><button onclick="tuckPants()">Tuck Pants</button></div>';
+    }
+    else if (buttonScreens[screenNumber] == "Shirts"){
+      returnedString = returnedString + '<div id="states"><button onclick="tuckShirt()">Tuck Shirt</button></div>';
+    }
+
+    document.getElementById("screens").innerHTML = returnedString;
+
+  }
+
+  function tuckPants(){
+    if (pantsTucked == true) {
+      pantsTucked = false;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Pants"){
+          imageArray[i].type = "long";
+        }
+      }
+    }
+    else if (pantsMid == true){
+      pantsTucked = true;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Pants"){
+          imageArray[i].type = "mid";
+        }
+      }
+    }
+    else if (pantsShort == true){
+      pantsTucked = true;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Pants"){
+          imageArray[i].type = "short";
+          console.log(imageArray[i]);
+        }
+      }
+    }
+    else {
+      pantsTucked = false;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Pants"){
+          imageArray[i].type = "long";
+        }
+      }
+    }
+
+    updateImage();
+  }
+
+  function tuckShirt(){
+
+    if (shirtTucked == true) {
+      shirtTucked = false;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Shirts"){
+          if (imageArray[i].type == "fittedTucked"){
+            imageArray[i].type = "fittedUntucked";
+          }
+          else {
+            imageArray[i].type = "looseUntucked";
+          }
+        }
+      }
+    }
+    else {
+      shirtTucked = true;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Shirts"){
+          if (imageArray[i].type == "fittedUntucked"){
+            imageArray[i].type = "fittedTucked";
+          }
+          else {
+            imageArray[i].type = "looseTucked";
+          }
+        }
+      }
+    }
+
+    updateImage();
+  }
+
+  function tuckSleeves(){
+
+    if (sleevesTucked == true) {
+      sleevesTucked = false;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Shirts"){
+          if (imageArray[i].type == "fittedTucked"){
+            imageArray[i].type = "looseTucked";
+          }
+          else {
+            imageArray[i].type = "looseUntucked";
+          }
+        }
+      }
+    }
+    else {
+      sleevesTucked = true;
+      for (i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Shirts"){
+          if (imageArray[i].type == "looseTucked"){
+            imageArray[i].type = "fittedTucked";
+          }
+          else {
+            imageArray[i].type = "fittedUntucked";
+          }
+        }
+      }
+    }
+
+    updateImage();
+  }
+
+
+
+  function toggleItem(item) {
+
+    // hide item if its already showing
+    if (item.show == true){
+      item.show = false;
+      uncheckTrigger(item);
+    }
+    // show item
+    else {
+      item.show = true;
+      checkTrigger(item);
+    }
+
+    updateImage();
+  }
+
+  // check if the item sets of any other special conditions
+  function checkTrigger(item){
+    if (item.trigger == "Sleeves"){
+      // Make sure all shirts have fitted sleeves
+      sleevesTucked = true;
+      for (let i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Shirts"){
+          if (imageArray[i].type == "looseTucked"){
+            imageArray[i].type = "fittedTucked";
+          }
+          else if (imageArray[i].type == "looseUntucked"){
+            imageArray[i].type = "fittedunTucked";
+          }
+        }
+      }
+    }
+    else if (item.trigger == "Tucked Shirt"){
+      // Make sure all shirts are tucked in
+      console.log("here");
+      shirtTucked = true;
+      for (let i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Shirts"){
+          console.log(imageArray[i]);
+          if (imageArray[i].type == "looseUntucked"){
+            console.log("tucking");
+            imageArray[i].type = "looseTucked";
+            console.log(imageArray[i]);
+          }
+          else if (imageArray[i].type == "fittedUntucked"){
+            imageArray[i].type = "fittedTucked";
+          }
+        }
+      }
+    }
+    else if (item.trigger == "Pants (Short)"){
+      // Make sure all pants are short
+      pantsShort = true;
+      pantsMid = false;
+      for (let i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Pants"){
+          imageArray[i].type = "short";
+        }
+      }
+    }
+    else if (item.trigger == "Pants (Mid)"){
+      // Make sure all pants are mid
+      pantsShort = false;
+      pantsMid = true;
+      for (let i = 0; i < imageArray.length; i++){
+        if (imageArray[i].category == "Pants"){
+          imageArray[i].type = "mid";
+        }
+      }
+    }
+  }
+
+  function uncheckTrigger(item){
+    if (item.trigger == "Sleeves"){
+      // Check if any other items are showing that have this trigger active
+      let otherShowing = false;
+      for (let i = 0; i < imageArray.length; i++){
+        if ((imageArray[i].trigger == "Sleeves") && (imageArray[i].show == true)){
+          otherShowing = true;
+        }
+      }
+      // if not, untrigger.
+      if (otherShowing == false){
+        sleevesTucked = false;
+        for (let i = 0; i < imageArray.length; i++){
+          if (imageArray[i].category == "Shirts"){
+            if (imageArray[i].type == "fittedUntucked"){
+              imageArray[i].type = "looseUntucked";
+            }
+            else if (imageArray[i].type == "fittedTucked"){
+              imageArray[i].type = "looseTucked";
+            }
+          }
+        }
+      }
+    }
+    else if (item.trigger == "Tucked Shirt"){
+      // Check if any other items are showing that have this trigger active
+      let otherShowing = false;
+      for (let i = 0; i < imageArray.length; i++){
+        if ((imageArray[i].trigger == "Tucked Shirt") && (imageArray[i].show == true)){
+          otherShowing = true;
+        }
+      }
+      // if not, untrigger.
+      if (otherShowing == false){
+        shirtTucked = false;
+        for (let i = 0; i < imageArray.length; i++){
+          if (imageArray[i].category == "Shirts"){
+            if (imageArray[i].type == "fittedTucked"){
+              imageArray[i].type = "fittedUntucked";
+            }
+            else if (imageArray[i].type == "looseTucked"){
+              imageArray[i].type = "looseUntucked";
+            }
+          }
+        }
+      }
+    }
+    else if (item.trigger == "Pants (Short)"){
+      // Check if any other items are showing that have this trigger active
+      let otherShowing = false;
+      for (let i = 0; i < imageArray.length; i++){
+        if ((imageArray[i].trigger == "Pants (Short)") && (imageArray[i].show == true)){
+          otherShowing = true;
+        }
+      }
+      // if not, untrigger.
+      if (otherShowing == false){
+        pantsShort = false;
+        for (let i = 0; i < imageArray.length; i++){
+          if (imageArray[i].category == "Pants"){
+            imageArray[i].type = "long";
+          }
+        }
+      }
+    }
+    else if (item.trigger == "Pants (Mid)"){
+      // Check if any other items are showing that have this trigger active
+      let otherShowing = false;
+      for (let i = 0; i < imageArray.length; i++){
+        if ((imageArray[i].trigger == "Pants (Mid)") && (imageArray[i].show == true)){
+          otherShowing = true;
+        }
+      }
+      // if not, untrigger.
+      if (otherShowing == false){
+        pantsMid = false;
+        for (let i = 0; i < imageArray.length; i++){
+          if (imageArray[i].category == "Pants"){
+            imageArray[i].type = "long";
+          }
+        }
+      }
+    }
+  }
+
+  function compileString(){
+    let outputString = "";
+    for (let i = 0; i < imageArray.length; i++) {
+      if (imageArray[i].show){
+        outputString = outputString + '<img class="item" src="' + findPath(imageArray[i]) + '">';
+      }
+    }
+
+    return outputString;
+  }
+
+  function findPath(item){
+    let output = "";
+    if (item.type == ""){
+      output = "images/" + item.category + "/" + item.item + ".png";
+    }
+    else {
+      output = "images/" + item.category + "/" + item.item + "/" + item.item +"_" + item.type + ".png";
+    }
+    
+    return output;
+
+  }  
+  
+  function updateImage() {
+    document.getElementById("mainContainer").innerHTML = compileString();
+  }
+
+
 </script>

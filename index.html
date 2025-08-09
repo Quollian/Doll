@@ -1,31 +1,74 @@
 <!DOCTYPE html>
 <html>
+<head>
+  
+</head>
 <body>
   <div id="header">
-    <h1>Doll Dressup</h1>
+    <h1>Dress Up Reid!</h1>
+    <p>By @<a href="=https://www.instagram.com/quollian/" target="_blank">quollian</a></p>
   </div>
   
-   <div id="mainContainer">
+  <div id="page">
+  <div id="mainContainer">
+      <img src="images/base/bg.png">
       <img src="images/base/hairBack.png">
       <img src="images/base/body.png">
       <img src="images/base/hairFront.png">
+      <img src="images/base/foreground.png">
   </div>
+  
 
   <div id="controls">
-    <button onclick="showScreens()">Next</button>
-    <div id="screens">
-    </div>
+    <button onclick="showScreens(0)">Shirts</button>
+    <button onclick="showScreens(1)">Pants</button>
+    <button onclick="showScreens(2)">Shoes</button>
+    <button onclick="showScreens(3)">Overshirts</button>
+    <button onclick="showScreens(4)">Gloves</button>
+    <button onclick="showScreens(5)">Capes</button>
+
+    
     <!--<button onclick="toggleItem(blackPants)">blackPants</button>-->
+  </div>
+
+  <div id="screens">
+    <p><i>Click on a category to see clothing options.</i></p>
+  </div>
+
   </div>
   
 </body>
 </html>
 
 <style>
+
+  body {
+    background-color: #332626;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  body p {
+    margin: 0px;
+  }
   #header {
-    background-color: #333;
+    color: #e7d9c7;
+    text-align: center;
+    padding: 16px;
+  }
+  #header h1 {
+    color: #9bad82;
+    margin: 0px;
+  }
+  #header a {
+    color:#e7d9c7;
   }
 
+  #page {
+    margin: auto;
+    padding: 20px;
+    background-color: #e7d9c7;
+    max-width: 510px;
+    border-radius: 10px;
+  }
   #mainContainer {
     position: relative;
     margin: auto;
@@ -43,8 +86,51 @@
   }
 
   #controls {
+    padding: 10px;
     position: static;
+    display: flex;
+    justify-content: space-between;
   }
+  #controls button {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11pt;
+    text-decoration: underline;
+    background: none;
+    border: none;
+  }
+
+  #screens {
+    padding: 10px;
+    position: static;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px 15px;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 120px;
+  }
+  #screens button {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11pt;
+    padding: 2px 10px;
+    border: none;
+    color: #332626;
+    border-radius: 5px;
+  }
+  #states {
+    width: 100%;
+  }
+  #states button {
+    background: none;
+    text-decoration: underline;
+    
+  }
+  button#activeButton {
+    background:#332626;
+    color:#9bad82;
+  }
+
 
 </style>
 
@@ -57,53 +143,75 @@
   let pantsShort = false;
 
   // base images
+  const bg = {show: true, category:"base", item:"bg", type:"", name: "Background", trigger: ""};
   const hairBack = {show: true, category:"base", item:"hairBack", type:"", name: "Hair Back", trigger: ""};
   const hairFront = {show: true, category:"base", item:"hairFront", type:"",  name: "Body", trigger: ""};
   const body = {show: true, category:"base", item:"body", type:"",  name: "Hair Front", trigger: ""};
+  const foreground = {show: true, category:"base", item:"foreground", type:"", name: "Foreground", trigger: ""};
 
   // Shirts
   const whiteShirt = {show: false, category:"Shirts", item:"whiteShirt", type:"looseUntucked",  name: "Basic White Shirt", trigger: ""};
-
+  const highneckShirt = {show: false, category:"Shirts", item:"highneckShirt", type:"looseUntucked",  name: "Highneck Shirt", trigger: ""};
+  const laceShirt = {show: false, category:"Shirts", item:"laceShirt", type:"fittedUntucked",  name: "Laced Sleeves Shirt", trigger: ""};
+  const meshShirt = {show: false, category:"Shirts", item:"meshShirt", type:"fittedTucked",  name: "Mesh Shirt", trigger: ""};
+  const offshoulderShirt = {show: false, category:"Shirts", item:"offshoulderShirt", type:"fittedUntucked",  name: "Shoulder Cutout Shirt", trigger: ""};
+  const panShirt = {show: false, category:"Shirts", item:"panShirt", type:"looseUntucked",  name: "Pan Shirt", trigger: ""};
 
   //Pants
   const blackPants = {show: false, category:"Pants", item:"blackPants", type:"long",  name: "Black Pants", trigger: ""};
+  const brownPants = {show: false, category:"Pants", item:"brownPants", type:"long",  name: "Brown Pants", trigger: ""};
+  const lacedPants = {show: false, category:"Pants", item:"lacedPants", type:"long",  name: "Laced Pants", trigger: ""};
 
   //Shoes
-  const decorativeBoots = {show: false, category:"Shoes", item:"decorativeBoots", type:"",  name: "Decorative Shoes", trigger: "Pants (Short)"};
-  
+  const decorativeBoots = {show: false, category:"Shoes", item:"decorativeBoots", type:"",  name: "Decorative Boots", trigger: "Pants (Short)"};
+  const blackBoots = {show: false, category:"Shoes", item:"blackBoots", type:"",  name: "Black Boots", trigger: "Pants (Mid)"};
+  const flaredBoots = {show: false, category:"Shoes", item:"flaredBoots", type:"",  name: "Flared Boots", trigger: "Pants (Short)"};
+  const shortBoots = {show: false, category:"Shoes", item:"shortBoots", type:"",  name: "Short Boots", trigger: "Pants (Mid)"};
+
   // Overshirts
-  const leafcoat= {show: false, category:"Overshirts", item:"leafcoat", type:"",  name: "Leaf Coat", trigger: "Tucked Shirt"};
-  const redcoat= {show: false, category:"Overshirts", item:"redcoat", type:"",  name: "Red Coat", trigger: "Tucked Shirt"};
-  
+  const leafcoat = {show: false, category:"Overshirts", item:"leafcoat", type:"",  name: "Leaf Coat", trigger: "Tucked Shirt"};
+  const redcoat = {show: false, category:"Overshirts", item:"redcoat", type:"",  name: "Red Coat", trigger: "Tucked Shirt"};
+  const leatherCuiras = {show: false, category:"Overshirts", item:"leatherCuiras", type:"",  name: "Leather Cuiras", trigger: "Tucked Shirt"};
+  const openVest = {show: false, category:"Overshirts", item:"openVest", type:"",  name: "Open Vest", trigger: "Tucked Shirt"};
+  const splitTunic = {show: false, category:"Overshirts", item:"splitTunic", type:"",  name: "Split Tunic", trigger: "Tucked Shirt"};
+  const vest = {show: false, category:"Overshirts", item:"vest", type:"",  name: "Vest", trigger: "Vest"};
+
   // Gloves
   const moon = {show: false, category:"Gloves", item:"moon", type:"",  name: "Moon Gloves", trigger: "Sleeves"};
   const short = {show: false, category:"Gloves", item:"short", type:"",  name: "Short Gloves", trigger: "Sleeves"};
+  const bandedGloves = {show: false, category:"Gloves", item:"bandedGloves", type:"",  name: "Banded Gloves", trigger: "Sleeves"};
+  const beltGloves = {show: false, category:"Gloves", item:"beltGloves", type:"",  name: "Belted Gloves", trigger: "Sleeves"};
+  const blackFur = {show: false, category:"Gloves", item:"blackFur", type:"",  name: "Black Fur", trigger: "Sleeves"};
+  const whiteFur = {show: false, category:"Gloves", item:"whiteFur", type:"",  name: "White Fur", trigger: "Sleeves"};
+  const splitGloves = {show: false, category:"Gloves", item:"splitGloves", type:"",  name: "Split Gloves", trigger: "Sleeves"};
 
+  // Collars
+  const furCollarBlack = {show: false, category:"Collars", item:"furCollarBlack", type:"",  name: "Black Fur Collar", trigger: "Tucked Shirt"};
+  const furCollarWhite = {show: false, category:"Collars", item:"furCollarWhite", type:"",  name: "White Fur Collar", trigger: "Tucked Shirt"};
+  const panCollar = {show: false, category:"Collars", item:"panCollar", type:"",  name: "Pan Collar", trigger: ""};
+  const whiteShirtCollar = {show: false, category:"Collars", item:"whiteShirtCollar", type:"",  name: "White Collar", trigger: ""};
 
   // buttonsScreens
-  let screenNumber = 0;
   let buttonScreens = ["Shirts", "Pants", "Shoes", "Overshirts", "Gloves", "Capes"];
 
 
-  let imageArray = [hairBack, body, decorativeBoots, blackPants, whiteShirt, short, moon, leafcoat, redcoat, hairFront];
+  let imageArray = [bg, hairBack, body, decorativeBoots, blackBoots, flaredBoots, shortBoots, blackPants, brownPants, lacedPants, whiteShirt, highneckShirt, laceShirt, meshShirt, offshoulderShirt, panShirt, short, moon, beltGloves, blackFur, whiteFur, splitGloves, bandedGloves, leatherCuiras, openVest, splitTunic, vest, leafcoat, redcoat, hairFront, foreground];
 
 
-  function showScreens(){
+  let savedScreen = 0;
+  function showScreens(screenNumber){
 
-    let returnedString = "<h3>";
-
-    if (screenNumber == (buttonScreens.length -1)){
-      screenNumber = 0;
-    }
-    else {
-      screenNumber++;
-    }
-
-    returnedString = returnedString + buttonScreens[screenNumber] + "</h3>";
+    savedScreen = screenNumber;
+    let returnedString = "";
 
     for (i = 0; i < imageArray.length; i++){
       if (buttonScreens[screenNumber] == imageArray[i].category){
-        returnedString = returnedString + '<button onclick="toggleItem(' + imageArray[i].item + ')">'+ imageArray[i].item + '</button>';
+        if (imageArray[i].show){
+          returnedString = returnedString + '<button id="activeButton" onclick="toggleItem(' + imageArray[i].item + ')">'+ imageArray[i].name + '</button>';
+        }
+        else {
+          returnedString = returnedString + '<button onclick="toggleItem(' + imageArray[i].item + ')">'+ imageArray[i].name + '</button>';
+        }
       }
     }
 
@@ -236,6 +344,7 @@
     }
 
     updateImage();
+    showScreens(savedScreen);
   }
 
   // check if the item sets of any other special conditions

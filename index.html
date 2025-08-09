@@ -22,10 +22,11 @@
   <div id="controls">
     <button onclick="showScreens(0)">Shirts</button>
     <button onclick="showScreens(1)">Pants</button>
-    <button onclick="showScreens(2)">Shoes</button>
+    <button onclick="showScreens(2)">Boots</button>
     <button onclick="showScreens(3)">Overshirts</button>
-    <button onclick="showScreens(4)">Gloves</button>
-    <button onclick="showScreens(5)">Capes</button>
+    <button onclick="showScreens(4)">Collars</button>
+    <button onclick="showScreens(5)">Gloves</button>
+    <button onclick="showScreens(6)">Cloaks</button>
 
     
     <!--<button onclick="toggleItem(blackPants)">blackPants</button>-->
@@ -197,11 +198,22 @@
   const panCollar = {show: false, category:"Collars", item:"panCollar", type:"",  name: "Pan Collar", trigger: ""};
   const whiteShirtCollar = {show: false, category:"Collars", item:"whiteShirtCollar", type:"",  name: "White Collar", trigger: ""};
 
+  // Capes
+  const maroonCape = {show: false, category:"Cloaks", item:"maroonCape", type:"front",  name: "Maroon Cape", trigger: "back"};
+  const maroonCapeBack = {show: false, category:"Cloaks", item:"maroonCape", type:"back",  name: "[hidden]", trigger: ""};
+  const roundCape = {show: false, category:"Cloaks", item:"roundCape", type:"front",  name: "Rounded Cape", trigger: "back"};
+  const roundCapeBack = {show: false, category:"Cloaks", item:"roundCape", type:"back",  name: "[hidden]", trigger: ""};
+  const tartanCape = {show: false, category:"Cloaks", item:"tartanCape", type:"front",  name: "Tartan Cape", trigger: "back"};
+  const tartanCapeBack = {show: false, category:"Cloaks", item:"tartanCape", type:"back",  name: "[hidden]", trigger: ""};
+  const tartanSash = {show: false, category:"Cloaks", item:"tartanSash", type:"front",  name: "Tartan Sash", trigger: "back"};
+  const tartanSashBack = {show: false, category:"Cloaks", item:"tartanSash", type:"back",  name: "[hidden]", trigger: ""};
+
+
   // buttonsScreens
-  let buttonScreens = ["Shirts", "Pants", "Boots", "Overshirts", "Gloves", "Capes"];
+  let buttonScreens = ["Shirts", "Pants", "Boots", "Overshirts", "Collars", "Gloves", "Cloaks"];
 
 
-  let imageArray = [bg, hairBack, body, decorativeBoots, blackBoots, flaredBoots, shortBoots, blackPants, brownPants, lacedPants, whiteShirt, highneckShirt, laceShirt, meshShirt, offshoulderShirt, panShirt, short, moon, beltGloves, blackFur, whiteFur, splitGloves, bandedGloves, leatherCuiras, openVest, splitTunic, vest, leafcoat, redcoat, hairFront, foreground];
+  let imageArray = [bg, hairBack, maroonCapeBack, roundCapeBack, tartanCapeBack, tartanSashBack, body, decorativeBoots, blackBoots, shortBoots, blackPants, brownPants, lacedPants, flaredBoots, whiteShirt, highneckShirt, laceShirt, meshShirt, offshoulderShirt, panShirt, short, moon, beltGloves, blackFur, whiteFur, splitGloves, bandedGloves, leatherCuiras, openVest, splitTunic, vest, leafcoat, redcoat, panCollar, whiteShirtCollar, maroonCape, roundCape, tartanCape, tartanSash, furCollarBlack, furCollarWhite, hairFront, foreground];
 
 
   let savedScreen = 0;
@@ -214,7 +226,10 @@
 
     for (i = 0; i < imageArray.length; i++){
       if (buttonScreens[screenNumber] == imageArray[i].category){
-        if (imageArray[i].show){
+        if (imageArray[i].name == "[hidden]"){
+          //do nothing
+        }
+        else if (imageArray[i].show){
           returnedString = returnedString + '<button id="activeButton" onclick="toggleItem(' + imageArray[i].item + ')">'+ imageArray[i].name + '</button>';
         }
         else {
@@ -424,6 +439,14 @@
         }
       }
     }
+    else if (item.trigger == "back"){
+      // turn on the back of the item
+      for (let i = 0; i < imageArray.length; i++){
+        if (imageArray[i].item == item.item){
+          imageArray[i].show = true;
+        }
+      }
+    }
   }
 
   function uncheckTrigger(item){
@@ -506,6 +529,14 @@
           if (imageArray[i].category == "Pants"){
             imageArray[i].type = "long";
           }
+        }
+      }
+    }
+    else if (item.trigger == "back"){
+      // turn off the back of the item
+      for (let i = 0; i < imageArray.length; i++){
+        if (imageArray[i].item == item.item){
+          imageArray[i].show = false;
         }
       }
     }

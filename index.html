@@ -168,20 +168,23 @@
   const blackPants = {show: false, category:"Pants", item:"blackPants", type:"long",  name: "Black Pants", trigger: ""};
   const brownPants = {show: false, category:"Pants", item:"brownPants", type:"long",  name: "Brown Pants", trigger: ""};
   const lacedPants = {show: false, category:"Pants", item:"lacedPants", type:"long",  name: "Laced Pants", trigger: ""};
+  const loosePants = {show: false, category:"Pants", item:"loosePants", type:"long",  name: "Loose Pants", trigger: ""};
 
   //Shoes
   const decorativeBoots = {show: false, category:"Boots", item:"decorativeBoots", type:"",  name: "Decorative Boots", trigger: "Pants (Short)"};
   const blackBoots = {show: false, category:"Boots", item:"blackBoots", type:"",  name: "Black Boots", trigger: "Pants (Mid)"};
   const flaredBoots = {show: false, category:"Boots", item:"flaredBoots", type:"",  name: "Flared Boots", trigger: "Pants (Short)"};
   const shortBoots = {show: false, category:"Boots", item:"shortBoots", type:"",  name: "Short Boots", trigger: "Pants (Mid)"};
+  const furBoots = {show: false, category:"Boots", item:"furBoots", type:"",  name: "Boots with the fur", trigger: "Pants (Short)"};
 
   // Overshirts
   const leafcoat = {show: false, category:"Overshirts", item:"leafcoat", type:"",  name: "Leaf Coat", trigger: "Tucked Shirt"};
   const redcoat = {show: false, category:"Overshirts", item:"redcoat", type:"",  name: "Red Coat", trigger: "Tucked Shirt"};
-  const leatherCuiras = {show: false, category:"Overshirts", item:"leatherCuiras", type:"",  name: "Leather Cuiras", trigger: "Tucked Shirt"};
+  const leatherCuirass = {show: false, category:"Overshirts", item:"leatherCuirass", type:"",  name: "Leather Cuirass", trigger: "Tucked Shirt"};
   const openVest = {show: false, category:"Overshirts", item:"openVest", type:"",  name: "Open Vest", trigger: "Tucked Shirt"};
   const splitTunic = {show: false, category:"Overshirts", item:"splitTunic", type:"",  name: "Split Tunic", trigger: "Tucked Shirt"};
-  const vest = {show: false, category:"Overshirts", item:"vest", type:"",  name: "Vest", trigger: "Vest"};
+  const vest = {show: false, category:"Overshirts", item:"vest", type:"",  name: "Vest", trigger: "Tucked Shirt"};
+  const stripedCoat = {show: false, category:"Overshirts", item:"stripedCoat", type:"",  name: "Striped Coat", trigger: "Tucked Shirt"};
 
   // Gloves
   const moon = {show: false, category:"Gloves", item:"moon", type:"",  name: "Moon Gloves", trigger: "Sleeves"};
@@ -191,6 +194,7 @@
   const blackFur = {show: false, category:"Gloves", item:"blackFur", type:"",  name: "Black Fur", trigger: "Sleeves"};
   const whiteFur = {show: false, category:"Gloves", item:"whiteFur", type:"",  name: "White Fur", trigger: "Sleeves"};
   const splitGloves = {show: false, category:"Gloves", item:"splitGloves", type:"",  name: "Split Gloves", trigger: "Sleeves"};
+  const fingerlessGloves = {show: false, category:"Gloves", item:"fingerlessGloves", type:"",  name: "Fingerless Gloves", trigger: ""};
 
   // Collars
   const furCollarBlack = {show: false, category:"Collars", item:"furCollarBlack", type:"",  name: "Black Fur Collar", trigger: "Tucked Shirt"};
@@ -213,7 +217,7 @@
   let buttonScreens = ["Shirts", "Pants", "Boots", "Overshirts", "Collars", "Gloves", "Cloaks"];
 
 
-  let imageArray = [bg, hairBack, maroonCapeBack, roundCapeBack, tartanCapeBack, tartanSashBack, body, decorativeBoots, blackBoots, shortBoots, blackPants, brownPants, lacedPants, flaredBoots, whiteShirt, highneckShirt, laceShirt, meshShirt, offshoulderShirt, panShirt, short, moon, beltGloves, blackFur, whiteFur, splitGloves, bandedGloves, leatherCuiras, openVest, splitTunic, vest, leafcoat, redcoat, panCollar, whiteShirtCollar, maroonCape, roundCape, tartanCape, tartanSash, furCollarBlack, furCollarWhite, hairFront, foreground];
+  let imageArray = [bg, hairBack, maroonCapeBack, roundCapeBack, tartanCapeBack, tartanSashBack, body, decorativeBoots, blackBoots, shortBoots, blackPants, brownPants, lacedPants, flaredBoots, loosePants, furBoots, fingerlessGloves, whiteShirt, highneckShirt, laceShirt, meshShirt, offshoulderShirt, panShirt, short, moon, beltGloves, blackFur, whiteFur, splitGloves, bandedGloves, leatherCuirass, openVest, splitTunic, vest, leafcoat, redcoat, stripedCoat, panCollar, whiteShirtCollar, maroonCape, roundCape, tartanCape, tartanSash, furCollarBlack, furCollarWhite, hairFront, foreground];
 
 
   let savedScreen = 0;
